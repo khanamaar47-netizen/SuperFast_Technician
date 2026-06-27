@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 580" width="100%" height="100%" shape-rendering="geometricPrecision">
+  <defs>
+    <!-- Perfectly oriented clockwise arc for circular text -->
+    <path id="fullTextPath" d="M 50 200 A 150 150 0 0 1 350 200" fill="none" stroke="none" />
+    
+    <!-- Premium Orange Linear Gradient -->
+    <linearGradient id="orangeGradFull" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fd761a" />
+      <stop offset="100%" stop-color="#e05300" />
+    </linearGradient>
+  </defs>
+
+  <!-- Group for Logo Seal/Badge, Centered on X=250 (translated X=50 + cx=200) -->
+  <g transform="translate(50, 10)">
+    <!-- Outer deep navy circular band -->
+    <circle cx="200" cy="200" r="176" fill="#0d3a77" stroke="#fd761a" stroke-width="3" />
+    
+    <!-- Outer circular text reading 'AC | FRIDGE | WASHING MACHINE | HEAT PUMP' -->
+    <text font-family="system-ui, -apple-system, sans-serif" font-weight="950" font-size="12.5" fill="#FFFFFF" letter-spacing="3.5">
+      <textPath href="#fullTextPath" startOffset="50%" text-anchor="middle">
+        AC | FRIDGE | WASHING MACHINE | HEAT PUMP
+      </textPath>
+    </text>
+
+    <!-- Inner premium white circular background -->
+    <circle cx="200" cy="200" r="140" fill="#FFFFFF" stroke="#fd761a" stroke-width="4.5" />
+
+    <!-- Speed stripes / trails extending from the left margin of the seal -->
+    <path d="M 36 182 L 4 182" stroke="#fd761a" stroke-width="4" stroke-linecap="round" />
+    <path d="M 32 200 L -4 200" stroke="#0d3a77" stroke-width="5" stroke-linecap="round" />
+    <path d="M 36 218 L 8 218" stroke="#fd761a" stroke-width="4" stroke-linecap="round" />
+
+    <!-- Stylized "SF" and integrated icons inside the white circle -->
+    <g transform="translate(200, 200)">
+      
+      <!-- Symmetrical speed swoosh/accents framing the top and bottom -->
+      <path d="M -90 -30 C -90 -30 -110 -10 -110 15" stroke="#fd761a" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.3" />
+      <path d="M 90 30 C 90 30 110 10 110 -15" stroke="#0d3a77" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.3" />
+
+      <!-- HERO "SF" MONOGRAM (Center) -->
+      <!-- Custom-slanted high-impact typography with subtle drop shadow for maximum crispness -->
+      <g transform="translate(0, 24)">
+        <!-- Drop shadow -->
+        <text font-family="'Impact', 'Arial Black', system-ui, -apple-system, sans-serif" font-style="italic" font-weight="900" font-size="82" letter-spacing="-2" text-anchor="middle" fill="#0d3a77" opacity="0.12" transform="translate(2.5, 2.5)">SF</text>
+        
+        <!-- Colored letters -->
+        <text font-family="'Impact', 'Arial Black', system-ui, -apple-system, sans-serif" font-style="italic" font-weight="900" font-size="82" letter-spacing="-2" text-anchor="middle">
+          <tspan fill="#0d3a77">S</tspan>
+          <tspan fill="#fd761a">F</tspan>
+        </text>
+
+        <!-- Lightning bolt cutting through the center/intersection of S and F -->
+        <polygon points="-4,-62 8,-62 0,-42 10,-42 -8,-14 -1,-34 -10,-34" fill="#FFFFFF" stroke="#0d3a77" stroke-width="1.5" transform="translate(-10, 18) scale(0.9)" />
+        <polygon points="-4,-62 8,-62 0,-42 10,-42 -8,-14 -1,-34 -10,-34" fill="#fd761a" transform="translate(-10, 18) scale(0.78)" />
+      </g>
+
+      <!-- APPLIANCE ICONS SYMMETRICALLY FRAMING THE "SF" MONOGRAM -->
+      
+      <!-- 1. Snowflake (Top-Left, 11 o'clock) -->
+      <g transform="translate(-38, -62) scale(0.65)" stroke="#0d3a77" stroke-width="3.5" stroke-linecap="round">
+        <line x1="0" y1="-20" x2="0" y2="20" />
+        <line x1="-20" y1="0" x2="20" y2="0" />
+        <line x1="-14" y1="-14" x2="14" y2="14" />
+        <line x1="-14" y1="14" x2="14" y2="-14" />
+        <path d="M -5 -15 L 0 -20 L 5 -15" fill="none" />
+        <path d="M -5 15 L 0 20 L 5 15" fill="none" />
+        <path d="M -15 -5 L -20 0 L -15 5" fill="none" />
+        <path d="M 15 -5 L 20 0 L 15 5" fill="none" />
+      </g>
+
+      <!-- 2. AC Indoor Unit (Top-Right, 1 o'clock) -->
+      <g transform="translate(38, -62) scale(0.72)">
+        <rect x="-25" y="-10" width="50" height="18" rx="3.5" fill="#0d3a77" />
+        <line x1="-20" y1="12" x2="-22" y2="22" stroke="#0d3a77" stroke-width="2.5" />
+        <line x1="-10" y1="12" x2="-11" y2="22" stroke="#0d3a77" stroke-width="2.5" />
+        <line x1="0" y1="12" x2="0" y2="22" stroke="#0d3a77" stroke-width="2.5" />
+        <line x1="10" y1="12" x2="11" y2="22" stroke="#0d3a77" stroke-width="2.5" />
+        <line x1="20" y1="12" x2="22" y2="22" stroke="#0d3a77" stroke-width="2.5" />
+        <rect x="-18" y="-4" width="36" height="4" rx="1" fill="#FFFFFF" />
+      </g>
+
+      <!-- 3. Heat Wave / Fan Icon (Right, 3 o'clock) -->
+      <g transform="translate(75, 5) scale(0.75)" stroke="#fd761a" stroke-width="3.5" stroke-linecap="round" fill="none">
+        <path d="M -15 15 C -15 5 -5 5 -5 -5 C -5 -15 5 -15 5 -25" />
+        <path d="M -5 15 C -5 5 5 5 5 -5 C 5 -15 15 -15 15 -25" />
+        <path d="M -25 15 C -25 5 -15 5 -15 -5 C -15 -15 -5 -15 -5 -25" />
+      </g>
+
+      <!-- 4. Refrigerator Icon (Left, 9 o'clock) -->
+      <g transform="translate(-75, 5) scale(0.68)">
+        <rect x="-18" y="-30" width="36" height="60" rx="4.5" fill="#FFFFFF" stroke="#0d3a77" stroke-width="3" />
+        <line x1="-18" y1="2" x2="18" y2="2" stroke="#0d3a77" stroke-width="3" />
+        <rect x="6" y="-18" width="4" height="12" rx="1" fill="#0d3a77" />
+        <rect x="6" y="8" width="4" height="16" rx="1" fill="#0d3a77" />
+      </g>
+
+      <!-- 5. Washing Machine Icon (Bottom-Right, 5 o'clock) -->
+      <g transform="translate(45, 70) scale(0.7)">
+        <rect x="-22" y="-22" width="44" height="46" rx="5.5" fill="#FFFFFF" stroke="#0d3a77" stroke-width="3" />
+        <circle cx="0" cy="5" r="13" fill="#FFFFFF" stroke="#0d3a77" stroke-width="3.5" />
+        <circle cx="0" cy="5" r="7" fill="#fd761a" />
+        <circle cx="-12" cy="-14" r="2.5" fill="#0d3a77" />
+        <circle cx="-5" cy="-14" r="2.5" fill="#0d3a77" />
+        <rect x="4" y="-16" width="10" height="4" fill="#0d3a77" />
+      </g>
+
+      <!-- 6. Microwave Icon (Bottom-Left, 7 o'clock) -->
+      <g transform="translate(-45, 70) scale(0.68)">
+        <rect x="-26" y="-18" width="52" height="36" rx="4.5" fill="#FFFFFF" stroke="#0d3a77" stroke-width="3" />
+        <rect x="-20" y="-12" width="30" height="24" rx="2" fill="#0d3a77" />
+        <rect x="14" y="-12" width="6" height="24" rx="1" fill="#fd761a" />
+      </g>
+    </g>
+  </g>
+
+  <!-- Typography Block below the Seal Badge -->
+  <g transform="translate(250, 445)" text-anchor="middle">
+    <!-- SUPER-FAST Text with slanted italics & styled lightning bolt -->
+    <text font-family="'Impact', 'Arial Black', system-ui, sans-serif" font-style="italic" font-weight="900" font-size="64" letter-spacing="-1" fill="#0d3a77">
+      <tspan fill="#0d3a77">SUPER</tspan>
+      <tspan fill="#fd761a" letter-spacing="-2">-FAST</tspan>
+    </text>
+
+    <!-- Detailed lightning bolt intersecting/next to -FAST -->
+    <!-- Positioned to align perfectly with the T in FAST -->
+    <g transform="translate(175, -50) scale(1.1)">
+      <!-- Orange horizontal speed dashes preceding the bolt -->
+      <line x1="-30" y1="18" x2="-5" y2="18" stroke="#fd761a" stroke-width="3" stroke-linecap="round" />
+      <line x1="-24" y1="28" x2="-8" y2="28" stroke="#fd761a" stroke-width="3" stroke-linecap="round" />
+      <line x1="-32" y1="38" x2="-12" y2="38" stroke="#fd761a" stroke-width="3" stroke-linecap="round" />
+
+      <!-- Sharp Blue Lightning Bolt -->
+      <polygon points="12,-5 28,-5 14,24 28,24 0,60 8,28 -4,28" fill="#0d3a77" stroke="#FFFFFF" stroke-width="1.5" />
+    </g>
+
+    <!-- Thick Horizontal Rule below SUPER-FAST -->
+    <line x1="-190" y1="12" x2="190" y2="12" stroke="#0d3a77" stroke-width="4.5" stroke-linecap="round" />
+
+    <!-- REPAIR & SERVICES Subtitle -->
+    <text y="46" font-family="system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-weight="900" font-size="24" letter-spacing="7" fill="#0d3a77">
+      REPAIR &amp; SERVICES
+    </text>
+  </g>
+</svg>

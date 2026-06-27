@@ -1,0 +1,6 @@
+{
+  "name": "Super-Fast Services",
+  "description": "Fast & Reliable Appliance Repair at Your Doorstep. Expert technicians for AC, Washing Machines, Refrigerators, and more.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

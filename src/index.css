@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Montserrat", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Custom palette matching Super-Fast Services */
+  --color-primary: #0050cb;
+  --color-primary-hover: #003fa4;
+  --color-secondary: #9d4300;
+  --color-secondary-container: #fd761a;
+  --color-secondary-container-hover: #e05e0d;
+  --color-bg-base: #f7f9fb;
+  --color-on-surface: #191c1e;
+  --color-on-surface-variant: #424656;
+}
+
+@layer utilities {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+}
