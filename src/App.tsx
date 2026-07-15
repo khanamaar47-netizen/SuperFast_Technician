@@ -40,6 +40,7 @@ import { ServiceItem } from "./types";
 import BookingModal from "./components/BookingModal";
 import PricingEstimator from "./components/PricingEstimator";
 import ReviewSection from "./components/ReviewSection";
+import ServicePage from "./components/ServicePage";
 // @ts-ignore
 import acOutdoorUnits from "./assets/images/ac_outdoor_units_1782153185462.jpg";
 // @ts-ignore
@@ -131,7 +132,7 @@ const FAQS_DATA = [
   },
   {
     q: "Do you charge any consultation or inspection fees?",
-    a: "Absolutely not! At Super-Fast Services, we believe in complete transparency. Our in-home diagnostic visit and expert consultation are 100% FREE with absolute zero fees. You select from fixed rates and pay only for the repairs we actually do."
+    a: "Absolutely not! At Super-Fast Services, we believe in complete transparency. Our in-home diagnostic visit and expert consultation are 100% FREE with absolute zero visiting fees. You will receive an upfront diagnostic analysis and warranty options before any work begins."
   },
   {
     q: "Do you use genuine manufacturing spare parts?",
@@ -139,7 +140,7 @@ const FAQS_DATA = [
   },
   {
     q: "Are there any hidden costs or weekend surge prices?",
-    a: "None. Super-Fast Services operates on rigid transparent rate cards. The final price estimated via our pricing wizard is exactly what you pay. No service surge fees, even on Sundays!"
+    a: "None. Super-Fast Services operates with total transparency. Our technicians analyze the problem and discuss a final custom quotation with you upfront. No surge fees apply, even on weekends and Sundays!"
   },
   {
     q: "How can I pay for the completed repair work?",
@@ -174,9 +175,92 @@ const SUPPORTED_PINCODES: Record<string, string> = {
 };
 
 export default function App() {
+  const [currentPath, setCurrentPath] = useState<string>(window.location.pathname);
   const [navbarScrolled, setNavbarScrolled] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   
+  // Custom router and navigation logic
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  const navigateTo = (path: string) => {
+    window.history.pushState({}, "", path);
+    setCurrentPath(path);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    let title = "Same-Day AC, Washing Machine & Fridge Repair in Bangalore | Super-Fast Services";
+    let metaDesc = "Doorstep appliance repair in HSR Layout, Koramangala, Indiranagar, Whitefield & Hebbal. Zero inspection fee, genuine parts, 90-day warranty. Book in 2 minutes.";
+
+    if (currentPath === "/ac-repair-bangalore") {
+      title = "AC Repair, Service & Gas Charging in Bangalore | Same-Day Doorstep Fixes - Super-Fast";
+      metaDesc = "Get professional AC repair and servicing in Bangalore. Fast split & commercial AC repairs, deep cleaning, gas leakage checks, AMC, and installations. Free inspection with same-day delivery.";
+    } else if (currentPath === "/washing-machine-repair-bangalore") {
+      title = "Washing Machine Repair & Service in Bangalore | Same-Day Front/Top Load Fixes - Super-Fast";
+      metaDesc = "Expert washing machine repair in Bangalore for top load, front load, and automatic models. Solenoid valves, drum alignment, motor issues, and water drainage fixed today.";
+    } else if (currentPath === "/refrigerator-repair-bangalore") {
+      title = "Refrigerator & Fridge Repair in Bangalore | Same-Day Gas Topping & Cooling Fix - Super-Fast";
+      metaDesc = "Professional double door, single door, and side-by-side refrigerator repair in Bangalore. Replaced compressors, relay swaps, gas refilling, and thermostat tune-ups.";
+    } else if (currentPath === "/microwave-repair-bangalore") {
+      title = "Microwave Oven Repair & Service in Bangalore | Magnetron & Touch Panel Repair - Super-Fast";
+      metaDesc = "Expert microwave oven repairs in Bangalore. Fixed within 60 minutes: no heating fixes, panel sparking, turntable alignments, high-voltage diode and magnetron replacements.";
+    } else if (currentPath === "/water-heater-repair-bangalore") {
+      title = "Water Heater & Geyser Repair in Bangalore | Instant Element Replacement - Super-Fast";
+      metaDesc = "Professional geyser and water heater repair in Bangalore. Thermostat & auto-cutout repairs, heating element swaps, and plumbing inlet/outlet pipeline fixes.";
+    }
+
+    document.title = title;
+    
+    // Dynamically update the meta description tag
+    const metaDescriptionTag = document.querySelector('meta[name="description"]');
+    if (metaDescriptionTag) {
+      metaDescriptionTag.setAttribute("content", metaDesc);
+    }
+
+    // Dynamically update or create the canonical URL tag
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    const cleanPath = currentPath === "/" ? "" : currentPath.replace(/\/$/, "");
+    const canonicalUrl = `https://www.super-fast.in${cleanPath}/`;
+    canonicalLink.setAttribute('href', canonicalUrl);
+
+    // Dynamically update or create Open Graph (OG) meta tags
+    const updateOrCreateMetaTag = (property: string, content: string) => {
+      let tag = document.querySelector(`meta[property="${property}"]`);
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.setAttribute('property', property);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute('content', content);
+    };
+
+    updateOrCreateMetaTag('og:title', title);
+    updateOrCreateMetaTag('og:description', metaDesc);
+    updateOrCreateMetaTag('og:url', canonicalUrl);
+    updateOrCreateMetaTag('og:type', 'website');
+    updateOrCreateMetaTag('og:site_name', 'Super-Fast Repair & Services');
+
+    // Select dynamic preview images optimized for WhatsApp and social media sharing
+    let ogImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuALRa5WpDslDTas7Z9-gACbLLbo5VLr6ywEFxqzAOSMf1YcntNZCK2B2PPvGBY0mw3oL8_YzvHKHUUCWW4xvyeG_lld_uF_um7hEm2_-mfr7ul81wCQay0BqNUCUuk2dADA-WwH3NBEnH69GNY8sKTmb-NGiIfZDFbeWTNAhwSiZJJ43BPo3Q1-oPBASMq7DHWAXfrwTI4pU74_kWAMmEnOXGtSBKEmUApQOoBmhGzzFw6_2vMCewRM4qLjKYnY1sW0wD264UDsQvPu";
+    if (currentPath === "/washing-machine-repair-bangalore") {
+      ogImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuBVUBhwRYuOhLTUUofMqCeA7b8z9hwZWC6POtgun-JWDJlRZtACd6YRJT4RD6s4v_QnT658532O8akHRayNZdyT4hBwaVwY3ro53rD3DjUqgIT21NTYKxB9RlKgAENzCjkN5iM79iqnSDoPlNbCqxEdFWYHVTMV6Qz8ELkBPj_G9gZ_xS2KNUXin_RDHt7tM6_Vnn6XPwAhwukzNN0D6hoKWj9l7F83xRIOPemFrv1lxB4GfBdSne9MVnPEoj88PkWmCBl0P7cYep_A";
+    } else if (currentPath === "/refrigerator-repair-bangalore") {
+      ogImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuBe5Y1TEJatXiZRYPR1LRITdbODNkU5sWaqOFYcKYUBe5Xd9SlAlW97zerK9G9oy5e7eo8FFf57ETC_0WBEpI0KW4rMcnBlu5FgDbI0UpO6Zo8u7ErPRKuneyybC_8CdMktf5PSLE_4MC5XO2OSg5Ytax-tQ9waXxw-cZbq4dJ_Ep91ifbPZaH_MbmPfjnWDQN_8e1_4WUWT8EjGg2tP387da2_uEjiVJQvP6_arv48HoZWhllKqJPjszGOLVm0nQJj32hIRWg4dY3_";
+    }
+    updateOrCreateMetaTag('og:image', ogImage);
+  }, [currentPath]);
+
   // Booking modal state
   const [bookingOpen, setBookingOpen] = useState<boolean>(false);
   const [selectedServiceId, setSelectedServiceId] = useState<string>("ac");
@@ -336,10 +420,13 @@ export default function App() {
         <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           
           {/* Brand Logo */}
-          <a href="#" className="flex items-center gap-3 group focus:outline-none">
+          <button 
+            onClick={() => navigateTo("/")} 
+            className="flex items-center gap-3 group focus:outline-none cursor-pointer text-left"
+          >
             <img 
               src={logoIcon} 
-              alt="Super-Fast Services Brand Logo" 
+              alt="Super-Fast Services - Top Rated Doorstep Appliance Repair in Bangalore" 
               className="w-11 h-11 object-contain transition-transform duration-300 group-hover:scale-105"
               referrerPolicy="no-referrer"
             />
@@ -347,15 +434,85 @@ export default function App() {
               <span className="text-lg font-display font-black text-[#0d3a77] tracking-tight block leading-none">Super-Fast</span>
               <span className="text-[9px] font-black text-[#fd761a] uppercase tracking-widest block mt-1">Repair &amp; Services</span>
             </div>
-          </a>
+          </button>
 
           {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="#services-catalog" className="text-slate-600 font-medium hover:text-primary transition-colors text-sm">Services</a>
-            <a href="#pricing-estimator" className="text-slate-600 font-medium hover:text-primary transition-colors text-sm">Estimation</a>
-            <a href="#why-choose-us" className="text-slate-600 font-medium hover:text-primary transition-colors text-sm">How it Works</a>
-            <a href="#reviews-board" className="text-slate-600 font-medium hover:text-primary transition-colors text-sm">Testimonials</a>
-            <a href="#faq-accordions" className="text-slate-600 font-medium hover:text-primary transition-colors text-sm">FAQs</a>
+            <button
+              onClick={() => {
+                if (currentPath !== "/") {
+                  navigateTo("/");
+                  setTimeout(() => {
+                    document.getElementById("services-catalog")?.scrollIntoView({ behavior: "smooth" });
+                  }, 150);
+                } else {
+                  document.getElementById("services-catalog")?.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+              className="text-slate-600 font-medium hover:text-primary transition-colors text-sm cursor-pointer focus:outline-none"
+            >
+              Services
+            </button>
+            <button
+              onClick={() => {
+                if (currentPath !== "/") {
+                  navigateTo("/");
+                  setTimeout(() => {
+                    document.getElementById("pricing-estimator")?.scrollIntoView({ behavior: "smooth" });
+                  }, 150);
+                } else {
+                  document.getElementById("pricing-estimator")?.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+              className="text-slate-600 font-medium hover:text-primary transition-colors text-sm cursor-pointer focus:outline-none"
+            >
+              Estimation
+            </button>
+            <button
+              onClick={() => {
+                if (currentPath !== "/") {
+                  navigateTo("/");
+                  setTimeout(() => {
+                    document.getElementById("why-choose-us")?.scrollIntoView({ behavior: "smooth" });
+                  }, 150);
+                } else {
+                  document.getElementById("why-choose-us")?.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+              className="text-slate-600 font-medium hover:text-primary transition-colors text-sm cursor-pointer focus:outline-none"
+            >
+              How it Works
+            </button>
+            <button
+              onClick={() => {
+                if (currentPath !== "/") {
+                  navigateTo("/");
+                  setTimeout(() => {
+                    document.getElementById("reviews-board")?.scrollIntoView({ behavior: "smooth" });
+                  }, 150);
+                } else {
+                  document.getElementById("reviews-board")?.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+              className="text-slate-600 font-medium hover:text-primary transition-colors text-sm cursor-pointer focus:outline-none"
+            >
+              Testimonials
+            </button>
+            <button
+              onClick={() => {
+                if (currentPath !== "/") {
+                  navigateTo("/");
+                  setTimeout(() => {
+                    document.getElementById("faq-accordions")?.scrollIntoView({ behavior: "smooth" });
+                  }, 150);
+                } else {
+                  document.getElementById("faq-accordions")?.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+              className="text-slate-600 font-medium hover:text-primary transition-colors text-sm cursor-pointer focus:outline-none"
+            >
+              FAQs
+            </button>
           </div>
 
           {/* Call-to-Action Buttons */}
@@ -430,7 +587,7 @@ export default function App() {
               <div className="flex items-center gap-2.5">
                 <img 
                   src={logoIcon} 
-                  alt="Super-Fast Services Brand Logo" 
+                  alt="Super-Fast Services - Same-Day Home Appliance Repair in Bangalore" 
                   className="w-10 h-10 object-contain"
                   referrerPolicy="no-referrer"
                 />
@@ -448,41 +605,86 @@ export default function App() {
             </div>
 
             <div className="space-y-3.5 pt-4 border-t border-slate-100">
-              <a 
-                href="#services-catalog" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-slate-700 hover:text-primary font-bold text-sm py-1.5"
+              <button 
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (currentPath !== "/") {
+                    navigateTo("/");
+                    setTimeout(() => {
+                      document.getElementById("services-catalog")?.scrollIntoView({ behavior: "smooth" });
+                    }, 150);
+                  } else {
+                    document.getElementById("services-catalog")?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                className="block text-slate-700 hover:text-primary font-bold text-sm py-1.5 text-left w-full cursor-pointer focus:outline-none"
               >
                 Repair Services
-              </a>
-              <a 
-                href="#pricing-estimator" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-slate-700 hover:text-primary font-bold text-sm py-1.5"
+              </button>
+              <button 
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (currentPath !== "/") {
+                    navigateTo("/");
+                    setTimeout(() => {
+                      document.getElementById("pricing-estimator")?.scrollIntoView({ behavior: "smooth" });
+                    }, 150);
+                  } else {
+                    document.getElementById("pricing-estimator")?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                className="block text-slate-700 hover:text-primary font-bold text-sm py-1.5 text-left w-full cursor-pointer focus:outline-none"
               >
-                Pricing Calculator
-              </a>
-              <a 
-                href="#why-choose-us" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-slate-700 hover:text-primary font-bold text-sm py-1.5"
+                Estimate Planner
+              </button>
+              <button 
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (currentPath !== "/") {
+                    navigateTo("/");
+                    setTimeout(() => {
+                      document.getElementById("why-choose-us")?.scrollIntoView({ behavior: "smooth" });
+                    }, 150);
+                  } else {
+                    document.getElementById("why-choose-us")?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                className="block text-slate-700 hover:text-primary font-bold text-sm py-1.5 text-left w-full cursor-pointer focus:outline-none"
               >
                 Why Choose Us
-              </a>
-              <a 
-                href="#reviews-board" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-slate-700 hover:text-primary font-bold text-sm py-1.5"
+              </button>
+              <button 
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (currentPath !== "/") {
+                    navigateTo("/");
+                    setTimeout(() => {
+                      document.getElementById("reviews-board")?.scrollIntoView({ behavior: "smooth" });
+                    }, 150);
+                  } else {
+                    document.getElementById("reviews-board")?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                className="block text-slate-700 hover:text-primary font-bold text-sm py-1.5 text-left w-full cursor-pointer focus:outline-none"
               >
                 Customer Reviews
-              </a>
-              <a 
-                href="#faq-accordions" 
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-slate-700 hover:text-primary font-bold text-sm py-1.5"
+              </button>
+              <button 
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (currentPath !== "/") {
+                    navigateTo("/");
+                    setTimeout(() => {
+                      document.getElementById("faq-accordions")?.scrollIntoView({ behavior: "smooth" });
+                    }, 150);
+                  } else {
+                    document.getElementById("faq-accordions")?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                className="block text-slate-700 hover:text-primary font-bold text-sm py-1.5 text-left w-full cursor-pointer focus:outline-none"
               >
                 General FAQs
-              </a>
+              </button>
             </div>
           </div>
 
@@ -525,7 +727,10 @@ export default function App() {
 
       {/* Main Content Layout */}
       <main className="pt-20">
-        
+        {["/ac-repair-bangalore", "/washing-machine-repair-bangalore", "/refrigerator-repair-bangalore", "/microwave-repair-bangalore", "/water-heater-repair-bangalore"].includes(currentPath) ? (
+          <ServicePage path={currentPath} onNavigate={navigateTo} onOpenBooking={handleOpenBooking} />
+        ) : (
+          <>
         {/* 1. Hero Showcase Section */}
         <section className="relative overflow-hidden py-12 md:py-20 lg:py-24 bg-gradient-to-b from-white to-blue-50/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -541,11 +746,11 @@ export default function App() {
                 </div>
 
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-display font-extrabold tracking-tight text-slate-800 leading-tight">
-                  Fast, Reliable <span className="text-primary bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">Appliance Repair</span> at Your Doorstep
+                  Same-Day <span className="text-primary bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">Appliance Repair</span> in Bangalore
                 </h1>
 
                 <p className="text-slate-600 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl">
-                  Expert senior technical partners for your Air Conditioner, Washing Machine, Refrigerator, Microwave, and more. 100% upfront pricing clarity, authentic OEM spares, and same-day certified dispatching in your city.
+                  Super-fast, premium home repair services in <strong>HSR Layout, Koramangala, Indiranagar, Whitefield, Hebbal,</strong> and across Bangalore. Zero inspection fee, genuine parts, and a 90-day warranty on AC, Washing Machine, Fridge, Microwave &amp; Water Heaters.
                 </p>
 
                 {/* Highlight AC Installation, Uninstallation & AMC Banner */}
@@ -625,7 +830,7 @@ export default function App() {
                 <div className="relative z-10 bg-gradient-to-tr from-slate-100 to-white p-3 rounded-2xl border border-slate-200/60 shadow-xl max-w-md mx-auto transform hover:rotate-0 rotate-1 transition-transform duration-500">
                   <img 
                     src={acIndoorUnit} 
-                    alt="Professional indoor split air conditioner unit with warm spotlights" 
+                    alt="Professional indoor split air conditioner unit serviced by same-day repair technician in Koramangala Bangalore" 
                     className="w-full h-auto aspect-[4/5] object-cover rounded-xl shadow-inner bg-slate-200"
                     referrerPolicy="no-referrer"
                   />
@@ -802,7 +1007,7 @@ export default function App() {
                 <div className="h-64 overflow-hidden relative">
                   <img 
                     src={SERVICES_DATA[0].image} 
-                    alt="Split AC diagnostics being performed" 
+                    alt="Split AC gas leak repair, wet jet wash, and compressor capacitor diagnostics in Koramangala Bangalore" 
                     className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 bg-slate-200"
                     referrerPolicy="no-referrer"
                   />
@@ -833,12 +1038,18 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="p-6 pt-0 border-t border-slate-100 mt-4 bg-white/40">
+              <div className="p-6 pt-0 border-t border-slate-100 mt-4 bg-white/40 flex flex-col sm:flex-row gap-2.5">
+                <button
+                  onClick={() => navigateTo("/ac-repair-bangalore")}
+                  className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg py-2.5 text-xs font-bold font-display transition-colors text-center cursor-pointer focus:outline-none"
+                >
+                  View Details &amp; Warranty
+                </button>
                 <button
                   onClick={() => handleOpenBooking("ac")}
-                  className="w-full bg-slate-800 hover:bg-slate-900 text-white rounded-lg py-2.5 text-xs font-bold font-display transition-colors"
+                  className="flex-1 bg-primary hover:bg-primary-hover text-white rounded-lg py-2.5 text-xs font-bold font-display transition-colors cursor-pointer focus:outline-none"
                 >
-                  Book AC Service Now
+                  Book Service Now
                 </button>
               </div>
             </div>
@@ -849,7 +1060,7 @@ export default function App() {
                 <div className="h-48 overflow-hidden relative">
                   <img 
                     src={SERVICES_DATA[1].image} 
-                    alt="Front load washing machine laundry settings" 
+                    alt="Front load washing machine drum repair, suspension shock absorber replacement, and diagnostic service in HSR Layout Bangalore" 
                     className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 bg-slate-200"
                     referrerPolicy="no-referrer"
                   />
@@ -868,12 +1079,18 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="p-5 pt-0">
+              <div className="p-5 pt-0 border-t border-slate-100 pt-3 flex flex-col gap-2">
+                <button
+                  onClick={() => navigateTo("/washing-machine-repair-bangalore")}
+                  className="w-full text-primary hover:text-primary-hover text-xs font-bold flex items-center justify-between focus:outline-none transition-colors cursor-pointer"
+                >
+                  <span>View Details &amp; Warranty</span> <ArrowRight className="w-3.5 h-3.5" />
+                </button>
                 <button
                   onClick={() => handleOpenBooking("washing-machine")}
-                  className="text-primary hover:text-primary-hover text-xs font-bold flex items-center gap-1 focus:outline-none transition-colors border-t border-slate-100 pt-3 w-full"
+                  className="w-full bg-slate-800 hover:bg-slate-900 text-white rounded-lg py-1.5 text-[11px] font-bold font-display transition-colors cursor-pointer"
                 >
-                  Book Work Now <ArrowRight className="w-3.5 h-3.5" />
+                  Book Service Now
                 </button>
               </div>
             </div>
@@ -884,7 +1101,7 @@ export default function App() {
                 <div className="h-48 overflow-hidden relative">
                   <img 
                     src={SERVICES_DATA[2].image} 
-                    alt="Premium double door refrigerator maintenance" 
+                    alt="Double door refrigerator gas refilling, thermostat diagnostics, and compressor replacement in Indiranagar Bangalore" 
                     className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 bg-slate-200"
                     referrerPolicy="no-referrer"
                   />
@@ -903,12 +1120,18 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="p-5 pt-0">
+              <div className="p-5 pt-0 border-t border-slate-100 pt-3 flex flex-col gap-2">
+                <button
+                  onClick={() => navigateTo("/refrigerator-repair-bangalore")}
+                  className="w-full text-primary hover:text-primary-hover text-xs font-bold flex items-center justify-between focus:outline-none transition-colors cursor-pointer"
+                >
+                  <span>View Details &amp; Warranty</span> <ArrowRight className="w-3.5 h-3.5" />
+                </button>
                 <button
                   onClick={() => handleOpenBooking("refrigerator")}
-                  className="text-primary hover:text-primary-hover text-xs font-bold flex items-center gap-1 focus:outline-none transition-colors border-t border-slate-100 pt-3 w-full"
+                  className="w-full bg-slate-800 hover:bg-slate-900 text-white rounded-lg py-1.5 text-[11px] font-bold font-display transition-colors cursor-pointer"
                 >
-                  Book Work Now <ArrowRight className="w-3.5 h-3.5" />
+                  Book Service Now
                 </button>
               </div>
             </div>
@@ -919,7 +1142,7 @@ export default function App() {
                 <div className="h-44 overflow-hidden relative">
                   <img 
                     src={SERVICES_DATA[3].image} 
-                    alt="Premium microwave oven diagnosis & repair" 
+                    alt="Convection microwave oven magnetron replacement and high-voltage circuit repair in Whitefield Bangalore" 
                     className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-750 bg-slate-200"
                     referrerPolicy="no-referrer"
                   />
@@ -941,12 +1164,18 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="p-5 pt-0">
+              <div className="p-5 pt-0 border-t border-slate-100 pt-3 flex flex-col gap-2">
+                <button
+                  onClick={() => navigateTo("/microwave-repair-bangalore")}
+                  className="w-full text-primary hover:text-primary-hover text-xs font-bold flex items-center justify-between focus:outline-none transition-colors cursor-pointer"
+                >
+                  <span>View Details &amp; Warranty</span> <ArrowRight className="w-3.5 h-3.5" />
+                </button>
                 <button
                   onClick={() => handleOpenBooking("microwave")}
-                  className="text-primary hover:text-primary-hover text-xs font-bold flex items-center gap-1 focus:outline-none transition-colors border-t border-slate-100 pt-3 w-full"
+                  className="w-full bg-slate-800 hover:bg-slate-900 text-white rounded-lg py-1.5 text-[11px] font-bold font-display transition-colors cursor-pointer"
                 >
-                  Book Work Now <ArrowRight className="w-3.5 h-3.5" />
+                  Book Service Now
                 </button>
               </div>
             </div>
@@ -957,7 +1186,7 @@ export default function App() {
                 <div className="h-44 overflow-hidden relative">
                   <img 
                     src={SERVICES_DATA[4].image} 
-                    alt="Water geyser heating coil fittings" 
+                    alt="Water geyser heating coil fitting, magnesium anode rod replacement, and thermostat troubleshooting in Hebbal Bangalore" 
                     className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-750 bg-slate-200"
                     referrerPolicy="no-referrer"
                   />
@@ -979,12 +1208,18 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="p-5 pt-0">
+              <div className="p-5 pt-0 border-t border-slate-100 pt-3 flex flex-col gap-2">
+                <button
+                  onClick={() => navigateTo("/water-heater-repair-bangalore")}
+                  className="w-full text-primary hover:text-primary-hover text-xs font-bold flex items-center justify-between focus:outline-none transition-colors cursor-pointer"
+                >
+                  <span>View Details &amp; Warranty</span> <ArrowRight className="w-3.5 h-3.5" />
+                </button>
                 <button
                   onClick={() => handleOpenBooking("water-heater")}
-                  className="text-primary hover:text-primary-hover text-xs font-bold flex items-center gap-1 focus:outline-none border-t border-slate-100 pt-3 w-full"
+                  className="w-full bg-slate-800 hover:bg-slate-900 text-white rounded-lg py-1.5 text-[11px] font-bold font-display transition-colors cursor-pointer"
                 >
-                  Book Water Geyser <ArrowRight className="w-3.5 h-3.5" />
+                  Book Service Now
                 </button>
               </div>
             </div>
@@ -995,7 +1230,7 @@ export default function App() {
                 <div className="h-44 overflow-hidden relative">
                   <img 
                     src={SERVICES_DATA[5].image} 
-                    alt="High-efficiency heat pump system diagnostics" 
+                    alt="High-efficiency heat pump fan motor replacement and HVAC system diagnostics in Jayanagar Bangalore" 
                     className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-750 bg-slate-200"
                     referrerPolicy="no-referrer"
                   />
@@ -1299,7 +1534,8 @@ export default function App() {
 
           </div>
         </section>
-
+          </>
+        )}
       </main>
 
       {/* Structured Footer */}
@@ -1311,7 +1547,7 @@ export default function App() {
             <div className="flex items-center gap-3">
               <img 
                 src={logoIcon} 
-                alt="Super-Fast Services Brand Logo" 
+                alt="Super-Fast Services - Trusted Home Appliance Repair Partner in Bangalore" 
                 className="w-10 h-10 object-contain"
                 referrerPolicy="no-referrer"
               />
@@ -1334,11 +1570,75 @@ export default function App() {
           <div className="grid grid-cols-2 gap-8 sm:gap-16">
             <div className="space-y-4">
               <h5 className="font-bold text-xs text-slate-850 uppercase tracking-widest">Platform</h5>
-              <ul className="space-y-2 text-xs text-slate-500">
-                <li><a href="#services-catalog" className="hover:text-primary transition-colors font-medium">Repair services</a></li>
-                <li><a href="#pincode-checker" className="hover:text-primary transition-colors font-medium">Active locations</a></li>
-                <li><a href="#pricing-estimator" className="hover:text-primary transition-colors font-medium">Transparent prices</a></li>
-                <li><a href="#faq-accordions" className="hover:text-primary transition-colors font-medium">Common FAQs</a></li>
+              <ul className="space-y-2 text-xs text-slate-500 text-left">
+                <li>
+                  <button
+                    onClick={() => {
+                      if (currentPath !== "/") {
+                        navigateTo("/");
+                        setTimeout(() => {
+                          document.getElementById("services-catalog")?.scrollIntoView({ behavior: "smooth" });
+                        }, 150);
+                      } else {
+                        document.getElementById("services-catalog")?.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                    className="hover:text-primary transition-colors font-medium cursor-pointer text-left focus:outline-none"
+                  >
+                    Repair Services
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      if (currentPath !== "/") {
+                        navigateTo("/");
+                        setTimeout(() => {
+                          document.getElementById("pincode-checker")?.scrollIntoView({ behavior: "smooth" });
+                        }, 150);
+                      } else {
+                        document.getElementById("pincode-checker")?.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                    className="hover:text-primary transition-colors font-medium cursor-pointer text-left focus:outline-none"
+                  >
+                    Active Locations
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      if (currentPath !== "/") {
+                        navigateTo("/");
+                        setTimeout(() => {
+                          document.getElementById("pricing-estimator")?.scrollIntoView({ behavior: "smooth" });
+                        }, 150);
+                      } else {
+                        document.getElementById("pricing-estimator")?.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                    className="hover:text-primary transition-colors font-medium cursor-pointer text-left focus:outline-none"
+                  >
+                    Transparent Prices
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      if (currentPath !== "/") {
+                        navigateTo("/");
+                        setTimeout(() => {
+                          document.getElementById("faq-accordions")?.scrollIntoView({ behavior: "smooth" });
+                        }, 150);
+                      } else {
+                        document.getElementById("faq-accordions")?.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }}
+                    className="hover:text-primary transition-colors font-medium cursor-pointer text-left focus:outline-none"
+                  >
+                    Common FAQs
+                  </button>
+                </li>
               </ul>
             </div>
             <div className="space-y-4">

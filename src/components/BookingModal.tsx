@@ -742,7 +742,7 @@ export default function BookingModal({
                     <div className="w-20 h-20 flex items-center justify-center mx-auto mb-2 animate-bounce">
                       <img 
                         src="/favicon.svg" 
-                        alt="Super-Fast Services Success Logo" 
+                        alt="Super-Fast Services - Confirmed Doorstep Appliance Repair Booking in Bangalore" 
                         className="w-20 h-20 object-contain"
                         referrerPolicy="no-referrer"
                       />

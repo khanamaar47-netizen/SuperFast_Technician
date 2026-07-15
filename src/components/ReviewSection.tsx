@@ -24,7 +24,7 @@ const INITIAL_REVIEWS: CustomerReview[] = [
     name: "Aman Preet Singh",
     location: "Koramangala, Sector 3",
     rating: 5,
-    text: "Extremely fast service! My double door refrigerator stopped cooling in the morning. Placed a request here, and Sanjeev arrived within 45 minutes. He replaced the start relay on the spot. Very rational price, absolutely no hidden charges. Strongly recommended!",
+    text: "Extremely fast service! My double door refrigerator stopped cooling in the morning. Placed a request here, and Sanjeev arrived within 45 minutes. He replaced the start relay on the spot. Outstanding professional service, absolutely no hidden charges. Strongly recommended!",
     serviceType: "Refrigerator Repair",
     date: "2 days ago"
   },
@@ -33,7 +33,7 @@ const INITIAL_REVIEWS: CustomerReview[] = [
     name: "Meera Nair",
     location: "HSR Layout, Sector 6",
     rating: 5,
-    text: "Serviced my Split AC yesterday. The technician did a thorough deep jetspray washing of the indoor filter and repaired the gas leakage safely. The remote is fully working now and cooling is incredibly chilly. The custom price discussed on call was very fair.",
+    text: "Serviced my Split AC yesterday. The technician did a thorough deep jetspray washing of the indoor filter and repaired the gas leakage safely. The remote is fully working now and cooling is incredibly chilly. The custom options discussed on call were very clear.",
     serviceType: "AC Servicing",
     date: "1 week ago"
   },
@@ -51,7 +51,7 @@ const INITIAL_REVIEWS: CustomerReview[] = [
     name: "Ridhi Saxena",
     location: "Whitefield, Prestige Palms",
     rating: 5,
-    text: "Washing machine water drain pump was completely choked. Ramesh arrived with gloves and professional diagnostic tools. Removed the coins and solved the error code issue in less than 20 mins. Honest billing and very clean work.",
+    text: "Washing machine water drain pump was completely choked. Ramesh arrived with gloves and professional diagnostic tools. Removed the coins and solved the error code issue in less than 20 mins. Honest diagnostics and very clean work.",
     serviceType: "Washing Machine Repair",
     date: "3 weeks ago"
   }
